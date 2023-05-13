@@ -11,3 +11,17 @@ func NewTelegramAPI(bot *tgbotapi.BotAPI) *TelegramAPI {
 		bot: bot,
 	}
 }
+
+func (api *TelegramAPI) GetUpdates() tgbotapi.UpdatesChannel {
+	u := tgbotapi.NewUpdate(0)
+
+	u.Timeout = 60
+
+	updates := api.bot.GetUpdatesChan(u)
+
+	return updates
+}
+
+func (api *TelegramAPI) Send(c tgbotapi.Chattable) (tgbotapi.Message, error) {
+	return api.bot.Send(c)
+}
