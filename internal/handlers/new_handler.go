@@ -26,9 +26,13 @@ func (h *Handlers) Start() error {
 		}
 
 		if update.Message.IsCommand() {
-			if err := h.commandHandle(); err != nil {
+			if err := h.commandHandle(update.Message); err != nil {
 				return err
 			}
+			continue
+		}
+
+		if err := h.handleMessage(update.Message); err != nil {
 			continue
 		}
 
